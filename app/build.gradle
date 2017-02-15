@@ -55,5 +55,8 @@ dependencies {
     compile 'com.squareup.sqlbrite:sqlbrite:1.0.0'
     compile 'nl.qbusict:cupboard:2.1.4'
     compile 'nl.littlerobots:cupboard-tools:0.2.0'
+
+    compile 'com.google.code.gson:gson:2.4'
+
     testCompile 'junit:junit:4.12'
 }
