@@ -1,5 +1,6 @@
 package com.mikeos.demo.myaccountant.ui.activity;
 
+import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,14 +10,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.ActivityMainBinding;
+import com.mikeos.demo.myaccountant.ui.fragment.ClientListFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    private FrameLayout contentFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,15 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         binding.navigationView.setNavigationItemSelectedListener(this);
+        contentFrame = binding.fragmentContentFrame;
+
+        if (savedInstanceState == null) {
+            setFragmentContent(new ClientListFragment());
+        }
+    }
+
+    public void setFragmentContent(Fragment fragment) {
+        getFragmentManager().beginTransaction().replace(contentFrame.getId(), fragment).commit();
     }
 
     @Override

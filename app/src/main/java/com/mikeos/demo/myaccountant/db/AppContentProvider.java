@@ -2,8 +2,7 @@ package com.mikeos.demo.myaccountant.db;
 
 import com.google.gson.Gson;
 import com.mikeos.demo.myaccountant.BuildConfig;
-import com.mikeos.demo.myaccountant.model.client.Company;
-import com.mikeos.demo.myaccountant.model.client.Person;
+import com.mikeos.demo.myaccountant.model.client.Client;
 
 import nl.littlerobots.cupboard.tools.convert.ListFieldConverterFactory;
 import nl.littlerobots.cupboard.tools.provider.CupboardContentProvider;
@@ -28,8 +27,7 @@ public class AppContentProvider extends CupboardContentProvider {
                 .registerFieldConverterFactory(new ListFieldConverterFactory(new Gson()))
                 .build());
 
-        cupboard().register(Person.class);
-        cupboard().register(Company.class);
+        cupboard().register(Client.class);
     }
 
     public AppContentProvider() {

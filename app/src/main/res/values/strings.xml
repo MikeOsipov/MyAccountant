@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">MyAccountant</string>
 
-    <string name="client_title_format">%1$s %2$s</string>
-
+    <string name="money_format">$%d</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
