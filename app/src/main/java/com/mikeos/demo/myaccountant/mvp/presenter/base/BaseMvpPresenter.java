@@ -1,4 +1,4 @@
-package com.mikeos.demo.myaccountant.mvp.presenter;
+package com.mikeos.demo.myaccountant.mvp.presenter.base;
 
 import com.arellomobile.mvp.MvpPresenter;
 import com.arellomobile.mvp.MvpView;

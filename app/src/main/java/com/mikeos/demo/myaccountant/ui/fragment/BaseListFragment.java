@@ -11,7 +11,7 @@ import android.widget.CursorAdapter;
 
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.BaseListFragmentLayoutBinding;
-import com.mikeos.demo.myaccountant.mvp.presenter.BaseDbListPresenter;
+import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.DBListView;
 
 /**

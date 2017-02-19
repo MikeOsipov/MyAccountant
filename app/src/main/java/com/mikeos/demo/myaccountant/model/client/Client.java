@@ -13,6 +13,8 @@ import java.util.List;
 
 public class Client extends DbModel<Client> {
 
+    public static final int PHONE_LIST_LIMIT = 6;
+
     private long totalSum;
     private String name;
     private List<String> phoneList;
@@ -35,6 +37,22 @@ public class Client extends DbModel<Client> {
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getPhoneList() {
+        return phoneList;
+    }
+
+    public String getVat() {
+        return vat;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public String getBankAccount() {
+        return bankAccount;
     }
 
     public String getTotalSumFormat() {

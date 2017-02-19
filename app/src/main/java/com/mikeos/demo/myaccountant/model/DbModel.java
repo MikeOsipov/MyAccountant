@@ -29,6 +29,14 @@ public abstract class DbModel<T extends DbModel> {
         this._id = _id;
     }
 
+    public Long getId() {
+        return _id;
+    }
+
+    public void setId(Long _id) {
+        this._id = _id;
+    }
+
     protected abstract Class<T> getEntityClass();
 
     public Uri getUri() {

@@ -1,4 +1,4 @@
-package com.mikeos.demo.myaccountant.mvp.presenter;
+package com.mikeos.demo.myaccountant.mvp.presenter.base;
 
 import android.database.Cursor;
 import android.net.Uri;

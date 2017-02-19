@@ -57,6 +57,9 @@ dependencies {
     compile 'nl.littlerobots:cupboard-tools:0.2.0'
 
     compile 'com.google.code.gson:gson:2.4'
-
+    // Material edit text
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    // Phone number mask
+    compile 'ru.tinkoff.decoro:decoro:1.2.1'
     testCompile 'junit:junit:4.12'
 }

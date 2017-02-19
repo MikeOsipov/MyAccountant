@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.arellomobile.mvp.InjectViewState;
 import com.mikeos.demo.myaccountant.db.AppContentProvider;
 import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.DBListView;
 
 /**

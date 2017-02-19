@@ -1,4 +1,4 @@
-package com.mikeos.demo.myaccountant.mvp.presenter;
+package com.mikeos.demo.myaccountant.mvp.presenter.base;
 
 import android.content.ContentUris;
 import android.database.Cursor;
@@ -22,8 +22,12 @@ public abstract class BaseDbModelPresenter<M extends DbModel<M>, V extends MvpVi
     public abstract Class<M> getModelClass();
 
     public BaseDbModelPresenter(long id) {
-        Uri uri = ContentUris.withAppendedId(AppContentProvider.getUriHelper().getUri(getModelClass()), id);
-        load(uri);
+        if(id < 0){
+            onModelPrepared(null);
+        } else {
+            Uri uri = ContentUris.withAppendedId(AppContentProvider.getUriHelper().getUri(getModelClass()), id);
+            load(uri);
+        }
     }
 
     @Override

@@ -1,13 +1,12 @@
 package com.mikeos.demo.myaccountant.ui.fragment;
 
-import android.appwidget.AppWidgetProviderInfo;
 import android.database.Cursor;
 import android.view.View;
 import android.widget.CursorAdapter;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.mikeos.demo.myaccountant.mvp.presenter.BaseDbListPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientListPresenter;
+import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
 import com.mikeos.demo.myaccountant.ui.adapter.ClientAdapter;
 
 /**
@@ -16,7 +15,7 @@ import com.mikeos.demo.myaccountant.ui.adapter.ClientAdapter;
 
 public class ClientListFragment extends BaseListFragment {
 
-    public static ClientListFragment getInstance(){
+    public static ClientListFragment getInstance() {
         return new ClientListFragment();
     }
 
@@ -35,7 +34,7 @@ public class ClientListFragment extends BaseListFragment {
 
     @Override
     public void moveToAdd() {
-
+        getFragmentContainer().addFragmentContent(ClientEditFragment.getAddInstance());
     }
 
     @Override

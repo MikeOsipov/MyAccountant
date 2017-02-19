@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="client_name_title">Name</string>
+    <string name="client_phones_title">Phone list</string>
+    <string name="client_vat_title">VAT</string>
+    <string name="client_bank_title">Bank</string>
+    <string name="client_account_title">Bank account</string>
+
+    <string name="client_phone_item_hint">Enter a phone number</string>
+
+    <string name="client_button_save">Save</string>
+    <string name="client_button_create">Create</string>
+
+    <!--<string name="client_"></string>-->
+
+</resources>

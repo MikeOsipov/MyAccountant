@@ -1,6 +1,7 @@
 package com.mikeos.demo.myaccountant.ui.activity;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,7 +18,7 @@ import com.mikeos.demo.myaccountant.databinding.ActivityMainBinding;
 import com.mikeos.demo.myaccountant.ui.fragment.ClientListFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IFragmentContainer {
 
     private DrawerLayout drawerLayout;
     private FrameLayout contentFrame;
@@ -45,8 +46,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
     public void setFragmentContent(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(contentFrame.getId(), fragment).commit();
+        setFragmentContent(fragment, false);
+    }
+
+    @Override
+    public void addFragmentContent(Fragment fragment) {
+        setFragmentContent(fragment, true);
+    }
+
+    public void setFragmentContent(Fragment fragment, boolean backStack) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (backStack) {
+            transaction.add(contentFrame.getId(), fragment).addToBackStack(null);
+        } else {
+            transaction.replace(contentFrame.getId(), fragment);
+        }
+        transaction.commit();
     }
 
     @Override
