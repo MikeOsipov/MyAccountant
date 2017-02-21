@@ -12,6 +12,8 @@
     <string name="client_button_save">Save</string>
     <string name="client_button_create">Create</string>
 
+    <string name="client_saving_progress">Saving&#8230;</string>
+
     <!--<string name="client_"></string>-->
 
 </resources>

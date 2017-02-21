@@ -25,7 +25,7 @@ public class ClientAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
         View view = View.inflate(context, R.layout.client_list_item, null);
         ClientListItemBinding binding = DataBindingUtil.bind(view);
-        view.setTag(view);
+        view.setTag(binding);
         return view;
     }
 

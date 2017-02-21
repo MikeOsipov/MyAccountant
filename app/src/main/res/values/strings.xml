@@ -3,6 +3,8 @@
 
     <string name="money_format">$%d</string>
 
+    <string name="error">Error</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

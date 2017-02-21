@@ -46,7 +46,10 @@ public class ClientEditPresenter extends BaseDbModelPresenter<Client, ClientEdit
     private void saveInternal(Client client,
                               Action1<Object> onSuccess, Action1<Throwable> onError) {
         getViewState().onSavingBegins();
-        Subscription subscription = Single.create(subscriber -> client.putIntoDB())
+        Subscription subscription = Single.create(subscriber -> {
+            client.putIntoDB();
+            subscriber.onSuccess(null);
+        })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(onSuccess, onError);

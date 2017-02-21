@@ -2,10 +2,12 @@ package com.mikeos.demo.myaccountant.ui;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -16,6 +18,11 @@ import com.mikeos.demo.myaccountant.databinding.PhoneEditListLayoutBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.tinkoff.decoro.MaskImpl;
+import ru.tinkoff.decoro.slots.PredefinedSlots;
+import ru.tinkoff.decoro.watchers.FormatWatcher;
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher;
 
 
 public class PhoneEditListView extends FrameLayout {
@@ -28,12 +35,14 @@ public class PhoneEditListView extends FrameLayout {
 
     public PhoneEditListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-                R.layout.phone_edit_list_layout, this, true);
-        if (!isInEditMode()) {
+        int layoutId = R.layout.phone_edit_list_layout;
+        if (isInEditMode()) {
+            View.inflate(context, layoutId, this);
+        } else {
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, this, true);
             binding.addPhoneButton.setOnClickListener(view1 -> addNewItem(null));
+            setCount(0);
         }
-        setCount(0);
     }
 
     public void setList(List<String> list) {
@@ -42,6 +51,9 @@ public class PhoneEditListView extends FrameLayout {
             for (String s : list) {
                 addNewItem(s);
             }
+        }
+        if (count == 0) {
+            addNewItem(null);
         }
     }
 
@@ -61,7 +73,10 @@ public class PhoneEditListView extends FrameLayout {
         for (int i = 0; i < phoneList.getChildCount(); i++) {
             View child = phoneList.getChildAt(i);
             PhoneEditListItemBinding b = ((PhoneEditListItemBinding) child.getTag());
-            list.add(b.phoneText.getText().toString());
+            String phoneNumber = b.phoneText.getText().toString();
+            if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.length() > 4) {
+                list.add(phoneNumber);
+            }
         }
         return list;
     }
@@ -70,9 +85,16 @@ public class PhoneEditListView extends FrameLayout {
         View item = View.inflate(getContext(), R.layout.phone_edit_list_item, null);
         PhoneEditListItemBinding itemBinding = DataBindingUtil.bind(item);
         binding.phoneList.addView(item);
-
         item.setTag(itemBinding);
-        itemBinding.phoneText.setText(content);
+
+        EditText phoneText = itemBinding.phoneText;
+
+        MaskImpl mask = MaskImpl.createTerminated(PredefinedSlots.RUS_PHONE_NUMBER);
+        FormatWatcher watcher = new MaskFormatWatcher(mask);
+        watcher.installOn(phoneText);
+
+
+        phoneText.setText(content);
         itemBinding.deleteButton.setOnClickListener(view -> {
             binding.phoneList.removeView(item);
             setCount(count - 1);

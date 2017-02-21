@@ -1,5 +1,6 @@
 package com.mikeos.demo.myaccountant.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -16,6 +17,7 @@ import com.mikeos.demo.myaccountant.databinding.ClientEditLayoutBinding;
 import com.mikeos.demo.myaccountant.model.client.Client;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientEditView;
+import com.mikeos.demo.myaccountant.utils.DialogsHelper;
 
 import rx.functions.Func1;
 
@@ -42,6 +44,7 @@ public class ClientEditFragment extends BaseFragment implements ClientEditView {
     }
 
     private ClientEditLayoutBinding binding;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -50,7 +53,17 @@ public class ClientEditFragment extends BaseFragment implements ClientEditView {
         binding = DataBindingUtil.bind(view);
         binding.phoneListView.setLimit(Client.PHONE_LIST_LIMIT);
         binding.saveButton.setOnClickListener(view1 -> saveClient());
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage(getString(R.string.client_saving_progress));
+
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        progressDialog.dismiss();
+        super.onDestroyView();
     }
 
     private void saveClient() {
@@ -81,16 +94,18 @@ public class ClientEditFragment extends BaseFragment implements ClientEditView {
 
     @Override
     public void onSavingBegins() {
-
+        progressDialog.show();
     }
 
     @Override
     public void onSaveSuccess() {
-
+        progressDialog.dismiss();
+        getActivity().onBackPressed();
     }
 
     @Override
     public void onSaveFailed(String message) {
-
+        progressDialog.dismiss();
+        DialogsHelper.showErrorDialog(getActivity(), message);
     }
 }

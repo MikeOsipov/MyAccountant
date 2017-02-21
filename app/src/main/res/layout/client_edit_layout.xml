@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="client"
-            type="com.mikeos.demo.myaccountant.model.client.Client" />
+            type="com.mikeos.demo.myaccountant.model.client.Client"/>
     </data>
 
     <LinearLayout
@@ -30,22 +30,23 @@
                 android:hint="@string/client_name_title"
                 android:text="@{client.name}"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="@string/client_name_title" />
+                app:met_floatingLabelText="@string/client_name_title"/>
 
 
             <com.mikeos.demo.myaccountant.ui.PhoneEditListView
                 android:id="@+id/phone_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/vat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/client_vat_title"
+                android:inputType="number"
                 android:text="@{client.vat}"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="@string/client_vat_title" />
+                app:met_floatingLabelText="@string/client_vat_title"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/bank"
@@ -54,22 +55,23 @@
                 android:hint="@string/client_bank_title"
                 android:text="@{client.bankName}"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="@string/client_bank_title" />
+                app:met_floatingLabelText="@string/client_bank_title"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/client_account_title"
+                android:inputType="number"
                 android:text="@{client.bankAccount}"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="@string/client_account_title" />
+                app:met_floatingLabelText="@string/client_account_title"/>
         </LinearLayout>
 
         <Button
             android:id="@+id/save_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </layout>
