@@ -62,9 +62,8 @@ public abstract class DbModel<T extends DbModel> {
     static section
      */
 
-    public static <T> T byId(Uri uri,
-                             Long id, Class<T> entityClass) {
-        return getProviderCompartment().query(uri, entityClass)
+    public static <T> T byId(Long id, Class<T> entityClass) {
+        return getProviderCompartment().query(AppContentProvider.getUriHelper().getUri(entityClass), entityClass)
                 .withSelection(BaseColumns._ID + "=?", String.valueOf(id)).get();
     }
 

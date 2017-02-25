@@ -59,6 +59,14 @@ public class Client extends DbModel<Client> {
         return MyAcApplication.getAppContext().getString(R.string.money_format, totalSum);
     }
 
+    public long getTotalSum() {
+        return totalSum;
+    }
+
+    public void setTotalSum(long totalSum) {
+        this.totalSum = totalSum;
+    }
+
     private void validate() {
         if (CommonHelper.checkNullAndEmpty(name, vat, bankName, bankAccount, phoneList)) {
             throw new IllegalArgumentException("There is null properties");
