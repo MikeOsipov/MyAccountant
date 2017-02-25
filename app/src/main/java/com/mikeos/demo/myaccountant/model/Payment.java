@@ -31,6 +31,22 @@ public class Payment extends DbModel<Payment> {
         this.date = date;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getSum() {
+        return sum;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
     public String getSumFormat() {
         return MyAcApplication.getAppContext().getString(R.string.money_format, sum);
     }

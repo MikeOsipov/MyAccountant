@@ -14,14 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.ActivityMainBinding;
-import com.mikeos.demo.myaccountant.db.AppContentProvider;
-import com.mikeos.demo.myaccountant.model.client.Client;
 import com.mikeos.demo.myaccountant.ui.fragment.ClientListFragment;
-
-import java.util.ArrayList;
 
 import rx.functions.Action1;
 

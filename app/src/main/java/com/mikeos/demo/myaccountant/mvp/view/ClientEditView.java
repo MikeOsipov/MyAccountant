@@ -1,16 +1,7 @@
 package com.mikeos.demo.myaccountant.mvp.view;
 
-import com.arellomobile.mvp.MvpView;
 import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.mvp.view.base.BaseEditView;
 
-public interface ClientEditView extends MvpView {
-
-    void showModel(Client client);
-
-    void onSavingBegins();
-
-    void onSaveSuccess();
-
-    void onSaveFailed(String message);
-
+public interface ClientEditView extends BaseEditView<Client> {
 }

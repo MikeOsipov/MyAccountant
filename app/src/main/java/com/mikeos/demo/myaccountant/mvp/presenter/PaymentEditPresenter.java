@@ -1,9 +1,9 @@
 package com.mikeos.demo.myaccountant.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Payment;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseEditPresenter;
-import com.mikeos.demo.myaccountant.mvp.view.ClientEditView;
+import com.mikeos.demo.myaccountant.mvp.view.PaymentEditView;
 
 import rx.Single;
 import rx.Subscription;
@@ -12,15 +12,22 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 @InjectViewState
-public class ClientEditPresenter extends BaseEditPresenter<Client, ClientEditView> {
+public class PaymentEditPresenter extends BaseEditPresenter<Payment, PaymentEditView> {
 
-    public ClientEditPresenter(long id) {
+    private long userId;
+
+    public PaymentEditPresenter(long id, long userId) {
         super(id);
+        this.userId = userId;
     }
 
     @Override
-    protected Subscription getSaveSubscription(Client update, Action1<Object> onSuccess, Action1<Throwable> onError) {
+    protected Subscription getSaveSubscription(Payment update, Action1<Object> onSuccess, Action1<Throwable> onError) {
         return Single.create(subscriber -> {
+            if(update.getUserId() < 0){
+                update.setUserId(userId);
+            }
+
             update.putIntoDB();
             subscriber.onSuccess(null);
         })
@@ -30,7 +37,7 @@ public class ClientEditPresenter extends BaseEditPresenter<Client, ClientEditVie
     }
 
     @Override
-    public Class<Client> getModelClass() {
-        return Client.class;
+    public Class<Payment> getModelClass() {
+        return Payment.class;
     }
 }

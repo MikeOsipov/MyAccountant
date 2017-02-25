@@ -62,4 +62,6 @@ dependencies {
     // Phone number mask
     compile 'ru.tinkoff.decoro:decoro:1.2.1'
     testCompile 'junit:junit:4.12'
+    // date dialog
+    compile 'com.borax12.materialdaterangepicker:library:1.9'
 }

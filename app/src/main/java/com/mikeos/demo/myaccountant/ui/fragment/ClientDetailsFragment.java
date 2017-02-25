@@ -55,6 +55,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.details_layout, null);
         binding = DataBindingUtil.bind(view);
+        binding.addButton.setOnClickListener(view1 -> paymentListPresenter.onAddClicked());
         setHasOptionsMenu(true);
         return view;
     }
@@ -121,7 +122,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
     @Override
     public void moveToAdd() {
-
+        getFragmentContainer().addFragmentContent(PaymentEditFragment.getAddInstance(getClientId()));
     }
 
     @Override

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="payment_edit_save">Save</string>
+    <string name="payment_edit_create">Add</string>
+    <string name="payment_edit_sum_hint">Enter the payment sum</string>
+
+</resources>
