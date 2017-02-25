@@ -22,6 +22,7 @@ import com.mikeos.demo.myaccountant.mvp.presenter.ClientDetailsPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.PaymentListPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientDetailsView;
 import com.mikeos.demo.myaccountant.mvp.view.DBListView;
+import com.mikeos.demo.myaccountant.ui.adapter.PaymentAdapter;
 
 public class ClientDetailsFragment extends BaseFragment implements ClientDetailsView, DBListView {
 
@@ -49,6 +50,9 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     }
 
     private DetailsLayoutBinding binding;
+    private MenuItem toggle;
+
+    private PaymentAdapter adapter;
 
     @Nullable
     @Override
@@ -56,6 +60,10 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         View view = inflater.inflate(R.layout.details_layout, null);
         binding = DataBindingUtil.bind(view);
         binding.addButton.setOnClickListener(view1 -> paymentListPresenter.onAddClicked());
+
+        adapter = new PaymentAdapter(getActivity(), null);
+        binding.paymentList.setAdapter(adapter);
+
         setHasOptionsMenu(true);
         return view;
     }
@@ -63,8 +71,6 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     private long getClientId() {
         return getArguments().getLong(BaseColumns._ID);
     }
-
-    private MenuItem toggle;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -117,7 +123,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
     @Override
     public void showData(Cursor data) {
-
+        adapter.swapCursor(data);
     }
 
     @Override
@@ -128,5 +134,11 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     @Override
     public void onItemSelected(View v, int position, Cursor cursor, long id) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        adapter.swapCursor(null);
+        super.onDestroyView();
     }
 }
