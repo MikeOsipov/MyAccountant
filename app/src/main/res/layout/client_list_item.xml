@@ -6,12 +6,15 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:transitionName="tr_test"
         android:orientation="vertical"
         android:padding="15dp">
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{client.name, default=CLIENT}"

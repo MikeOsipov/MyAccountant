@@ -3,6 +3,7 @@ package com.mikeos.demo.myaccountant.ui.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -26,6 +27,9 @@ public class ClientAdapter extends CursorAdapter {
         View view = View.inflate(context, R.layout.client_list_item, null);
         ClientListItemBinding binding = DataBindingUtil.bind(view);
         view.setTag(binding);
+
+        ViewCompat.setTransitionName(binding.root, cursor.getPosition() + "_image");
+
         return view;
     }
 

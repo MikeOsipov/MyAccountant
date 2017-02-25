@@ -1,6 +1,7 @@
 package com.mikeos.demo.myaccountant.ui.activity;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,9 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.ActivityMainBinding;
+import com.mikeos.demo.myaccountant.db.AppContentProvider;
+import com.mikeos.demo.myaccountant.model.client.Client;
 import com.mikeos.demo.myaccountant.ui.fragment.ClientListFragment;
+
+import java.util.ArrayList;
+
+import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IFragmentContainer {
@@ -25,6 +33,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        ArrayList<Client> a = new ArrayList<Client>(){
+//            {
+//                add(new Client("Name 1", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 500));
+//                add(new Client("Name 2", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 1000));
+//                add(new Client("Name 3", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 2000));
+//                add(new Client("Name 4", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 3000));
+//            }
+//        };
+//        MyAcApplication.cupboard().put(AppContentProvider.getUriHelper().getUri(Client.class), Client.class, a);
+
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -47,22 +66,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public FragmentManager getManager() {
+        return getFragmentManager();
+    }
+
+    @Override
     public void setFragmentContent(Fragment fragment) {
-        setFragmentContent(fragment, false);
+        setFragmentContent(fragment, null);
     }
 
     @Override
     public void addFragmentContent(Fragment fragment) {
-        setFragmentContent(fragment, true);
+        addFragmentContent(fragment, null);
     }
 
-    public void setFragmentContent(Fragment fragment, boolean backStack) {
+    @Override
+    public void addFragmentContent(Fragment fragment, Action1<FragmentTransaction> transformer) {
+        setFragmentContent(fragment, transformer);
+    }
+
+    public void setFragmentContent(Fragment fragment, Action1<FragmentTransaction> transformer) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        if (backStack) {
-            transaction.add(contentFrame.getId(), fragment).addToBackStack(null);
-        } else {
-            transaction.replace(contentFrame.getId(), fragment);
+        if (transformer != null) {
+            transformer.call(transaction);
         }
+        transaction.replace(contentFrame.getId(), fragment).addToBackStack(null);
         transaction.commit();
     }
 
@@ -70,8 +98,10 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (getFragmentManager().getBackStackEntryCount() > 1){
             super.onBackPressed();
+        } else {
+            finish();
         }
     }
 
