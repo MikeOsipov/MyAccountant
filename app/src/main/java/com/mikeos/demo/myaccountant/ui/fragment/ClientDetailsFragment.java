@@ -58,17 +58,23 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
     private PaymentAdapter adapter;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.details_layout, null);
         binding = DataBindingUtil.bind(view);
-        binding.addButton.setOnClickListener(view1 -> paymentListPresenter.onAddClicked());
+        binding.addButton.setOnClickListener(v -> paymentListPresenter.onAddClicked());
+        binding.editButton.setOnClickListener(v -> detailsPresenter.handleEdit());
 
         adapter = new PaymentAdapter(getActivity(), null);
         binding.paymentList.setAdapter(adapter);
 
-        setHasOptionsMenu(true);
         return view;
     }
 
@@ -81,6 +87,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.client_details_menu, menu);
         toggle = menu.findItem(R.id.menu_mode_toggle);
+        updateToggle();
     }
 
     @Override
@@ -119,7 +126,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         binding.addButton.show();
         binding.infoFrame.setVisibility(View.GONE);
         binding.editButton.hide();
-        toggle.setIcon(R.drawable.ic_info_outline_white_36dp);
+        updateToggle();
     }
 
     @Override
@@ -128,7 +135,14 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         binding.addButton.hide();
         binding.infoFrame.setVisibility(View.VISIBLE);
         binding.editButton.show();
-        toggle.setIcon(R.drawable.ic_list_white_36dp);
+        updateToggle();
+    }
+
+    private void updateToggle() {
+        if (toggle != null) {
+            toggle.setIcon(detailsPresenter.isListMode() ?
+                    R.drawable.ic_info_outline_white_36dp : R.drawable.ic_list_white_36dp);
+        }
     }
 
     @Override
@@ -140,6 +154,11 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
                     Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
                     startActivity(intent);
                 }).show();
+    }
+
+    @Override
+    public void moveToEdit(long clientId) {
+        getFragmentContainer().addFragmentContent(ClientEditFragment.getEditInstance(clientId));
     }
 
     // list

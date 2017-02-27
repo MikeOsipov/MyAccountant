@@ -13,22 +13,26 @@ public class ClientDetailsPresenter extends BaseDbModelPresenter<Client, ClientD
 
     public ClientDetailsPresenter(long id) {
         super(id);
+        listMode();
     }
 
     @Override
     protected void onModelPrepared(Client model) {
         getViewState().setClient(model);
-        listMode();
     }
 
     private void listMode() {
-        getViewState().setPaymentListMode();
         isListMode = true;
+        getViewState().setPaymentListMode();
     }
 
     private void detailsMode() {
-        getViewState().setDetailsMode();
         isListMode = false;
+        getViewState().setDetailsMode();
+    }
+
+    public boolean isListMode() {
+        return isListMode;
     }
 
     public void toggleState() {
@@ -41,6 +45,10 @@ public class ClientDetailsPresenter extends BaseDbModelPresenter<Client, ClientD
 
     public void handlePhoneTap(String phone) {
         getViewState().moveToCall(phone);
+    }
+
+    public void handleEdit(){
+        getViewState().moveToEdit(getModel().getId());
     }
 
     @Override

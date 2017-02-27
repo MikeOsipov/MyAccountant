@@ -26,4 +26,7 @@ public interface ClientDetailsView extends MvpView {
     @StateStrategyType(SkipStrategy.class)
     void moveToCall(String number);
 
+    @StateStrategyType(SkipStrategy.class)
+    void moveToEdit(long clientId);
+
 }
