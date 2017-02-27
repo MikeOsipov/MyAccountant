@@ -3,16 +3,16 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:colorBackground"
-        android:clickable="true">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:colorBackground"
+                    android:clickable="true">
 
         <include
             android:id="@+id/header"
             layout="@layout/client_list_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <View
             android:id="@+id/separator"
@@ -20,7 +20,7 @@
             android:layout_height="2dp"
             android:layout_below="@id/header"
             android:layout_margin="3dp"
-            android:background="#cccccc" />
+            android:background="#cccccc"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -30,17 +30,34 @@
             <ListView
                 android:id="@+id/payment_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
 
-            <TextView
-                android:id="@+id/info"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:colorBackground"
-                android:padding="10dp"
-                android:text="example"
-                android:textSize="20sp" />
+            <LinearLayout android:id="@+id/info_frame"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:background="?android:colorBackground"
+                          android:orientation="vertical"
+                          android:padding="10dp">
 
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/client_phones_title"
+                    android:textSize="20sp"/>
+
+                <LinearLayout android:id="@+id/phone_list_frame"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:layout_marginTop="5dp"
+                              android:orientation="vertical"/>
+            </LinearLayout>
         </FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -51,7 +68,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_add_white_36dp" />
+            app:srcCompat="@drawable/ic_add_white_36dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/edit_button"
@@ -61,7 +78,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_edit_white_36dp" />
+            app:srcCompat="@drawable/ic_edit_white_36dp"/>
 
     </RelativeLayout>
 </layout>

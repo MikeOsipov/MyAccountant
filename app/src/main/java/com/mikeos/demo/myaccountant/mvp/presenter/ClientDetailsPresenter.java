@@ -31,12 +31,16 @@ public class ClientDetailsPresenter extends BaseDbModelPresenter<Client, ClientD
         isListMode = false;
     }
 
-    public void toggleState(){
+    public void toggleState() {
         if (isListMode) {
             detailsMode();
         } else {
             listMode();
         }
+    }
+
+    public void handlePhoneTap(String phone) {
+        getViewState().moveToCall(phone);
     }
 
     @Override

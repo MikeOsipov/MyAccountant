@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.mikeos.demo.myaccountant.model.client.Client;
 
@@ -21,5 +22,8 @@ public interface ClientDetailsView extends MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void setDetailsMode();
+
+    @StateStrategyType(SkipStrategy.class)
+    void moveToCall(String number);
 
 }

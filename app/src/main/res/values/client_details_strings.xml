@@ -7,12 +7,17 @@
     <string name="client_bank_title">Bank</string>
     <string name="client_account_title">Bank account</string>
 
+    <string name="client_additional_info_format">VAT: %1$s\nBank: %2$s\nBank account: %3$s</string>
+
     <string name="client_phone_item_hint">Enter a phone number</string>
 
     <string name="client_button_save">Save</string>
     <string name="client_button_create">Create</string>
 
     <string name="client_saving_progress">Saving&#8230;</string>
+    <string name="client_call_intention_message">Do you want to call to\n%s ?</string>
+    <string name="client_call_intention_ok">Call</string>
+    <string name="client_call_intention_cancel">Abort</string>
 
     <!--<string name="client_"></string>-->
 

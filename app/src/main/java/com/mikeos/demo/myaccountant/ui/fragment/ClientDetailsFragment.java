@@ -1,8 +1,10 @@
 package com.mikeos.demo.myaccountant.ui.fragment;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -23,6 +26,7 @@ import com.mikeos.demo.myaccountant.mvp.presenter.PaymentListPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientDetailsView;
 import com.mikeos.demo.myaccountant.mvp.view.DBListView;
 import com.mikeos.demo.myaccountant.ui.adapter.PaymentAdapter;
+import com.mikeos.demo.myaccountant.utils.DialogsHelper;
 
 public class ClientDetailsFragment extends BaseFragment implements ClientDetailsView, DBListView {
 
@@ -93,7 +97,15 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     @Override
     public void setClient(Client client) {
         binding.header.setClient(client);
-        binding.info.setText("info");
+        binding.info.setText(getString(R.string.client_additional_info_format,
+                client.getVat(), client.getBankName(), client.getBankAccount()));
+        binding.phoneListFrame.removeAllViews();
+        for (String phone : client.getPhoneList()) {
+            TextView textView = ((TextView) View.inflate(getActivity(), R.layout.phone_number_text_view, null));
+            textView.setText(phone);
+            textView.setOnClickListener(v -> detailsPresenter.handlePhoneTap(((TextView) v).getText().toString()));
+            binding.phoneListFrame.addView(textView);
+        }
     }
 
     @Override
@@ -105,7 +117,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     public void setPaymentListMode() {
         binding.paymentList.setVisibility(View.VISIBLE);
         binding.addButton.show();
-        binding.info.setVisibility(View.GONE);
+        binding.infoFrame.setVisibility(View.GONE);
         binding.editButton.hide();
         toggle.setIcon(R.drawable.ic_info_outline_white_36dp);
     }
@@ -114,9 +126,20 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
     public void setDetailsMode() {
         binding.paymentList.setVisibility(View.GONE);
         binding.addButton.hide();
-        binding.info.setVisibility(View.VISIBLE);
+        binding.infoFrame.setVisibility(View.VISIBLE);
         binding.editButton.show();
         toggle.setIcon(R.drawable.ic_list_white_36dp);
+    }
+
+    @Override
+    public void moveToCall(String number) {
+        DialogsHelper.getBuilder(getActivity())
+                .setMessage(getString(R.string.client_call_intention_message, number))
+                .setNegativeButton(R.string.client_call_intention_cancel, null)
+                .setPositiveButton(R.string.client_call_intention_ok, (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
+                    startActivity(intent);
+                }).show();
     }
 
     // list
