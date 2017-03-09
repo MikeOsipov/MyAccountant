@@ -74,6 +74,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
         adapter = new PaymentAdapter(getActivity(), null);
         binding.paymentList.setAdapter(adapter);
+        binding.paymentList.setEmptyView(binding.emptyListMessage);
 
         return view;
     }
@@ -122,7 +123,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
     @Override
     public void setPaymentListMode() {
-        binding.paymentList.setVisibility(View.VISIBLE);
+        binding.listFrame.setVisibility(View.VISIBLE);
         binding.addButton.show();
         binding.infoFrame.setVisibility(View.GONE);
         binding.editButton.hide();
@@ -131,7 +132,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
     @Override
     public void setDetailsMode() {
-        binding.paymentList.setVisibility(View.GONE);
+        binding.listFrame.setVisibility(View.GONE);
         binding.addButton.hide();
         binding.infoFrame.setVisibility(View.VISIBLE);
         binding.editButton.show();

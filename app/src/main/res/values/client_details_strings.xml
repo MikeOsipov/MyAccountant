@@ -18,6 +18,7 @@
     <string name="client_call_intention_message">Do you want to call to\n%s ?</string>
     <string name="client_call_intention_ok">Call</string>
     <string name="client_call_intention_cancel">Abort</string>
+    <string name="empty_payments_list">NO PAYMENTS</string>
 
     <!--<string name="client_"></string>-->
 
