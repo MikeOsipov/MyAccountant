@@ -1,6 +1,6 @@
 package com.mikeos.demo.myaccountant.mvp.presenter.base;
 
-import com.android.annotations.NonNull;
+import android.support.annotation.NonNull;
 import com.mikeos.demo.myaccountant.model.DbModel;
 import com.mikeos.demo.myaccountant.mvp.view.base.BaseEditView;
 

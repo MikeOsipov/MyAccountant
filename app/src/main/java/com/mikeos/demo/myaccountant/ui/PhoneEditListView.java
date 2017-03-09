@@ -2,6 +2,7 @@ package com.mikeos.demo.myaccountant.ui;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.android.annotations.NonNull;
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.PhoneEditListItemBinding;
 import com.mikeos.demo.myaccountant.databinding.PhoneEditListLayoutBinding;
