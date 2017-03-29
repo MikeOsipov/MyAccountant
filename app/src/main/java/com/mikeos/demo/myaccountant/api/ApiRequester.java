@@ -18,15 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRequester {
 
-    private static ApiRequester instance;
-
-    public static ApiRequester getInstance() {
-        if (instance == null) {
-            instance = new ApiRequester();
-        }
-        return instance;
-    }
-
     private ServerAPi api;
 
     public ApiRequester() {
@@ -58,14 +49,21 @@ public class ApiRequester {
     }
 
     private <T extends BaseServerResponse> T makeRequest(Call<T> call) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (true) {
             return ((T) new BaseServerResponse());
         }
-        Response<T> response = null;
+        Response<T> response;
         try {
             response = call.execute();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ApiError("Request failed");
         }
         if (response == null || !response.isSuccessful()) {
             throw new ApiError("Request failed");

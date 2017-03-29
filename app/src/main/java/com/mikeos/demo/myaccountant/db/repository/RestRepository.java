@@ -1,7 +1,10 @@
 package com.mikeos.demo.myaccountant.db.repository;
 
+import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.api.ApiRequester;
 import com.mikeos.demo.myaccountant.model.DbModel;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.functions.Action2;
@@ -11,6 +14,12 @@ import rx.functions.Action2;
  */
 
 public abstract class RestRepository<T extends DbModel<T>> extends BaseRepository<T> {
+
+    @Inject
+    ApiRequester requester;
+
+    public RestRepository() {
+    }
 
     @Override
     public Observable<T> create(T item) {
@@ -35,7 +44,7 @@ public abstract class RestRepository<T extends DbModel<T>> extends BaseRepositor
 
     private Observable<T> preRest(T item, Action2<T, ApiRequester> restAction, Observable<T> src) {
         return Observable.concat(Observable.create(subscriber -> {
-            restAction.call(item, ApiRequester.getInstance());
+            restAction.call(item, requester);
             subscriber.onCompleted();
         }), src);
     }

@@ -3,6 +3,9 @@ package com.mikeos.demo.myaccountant;
 import android.app.Application;
 import android.content.Context;
 
+import com.mikeos.demo.myaccountant.di.DaggerMainComponent;
+import com.mikeos.demo.myaccountant.di.MainComponent;
+import com.mikeos.demo.myaccountant.di.MainModule;
 import com.squareup.sqlbrite.BriteContentResolver;
 import com.squareup.sqlbrite.SqlBrite;
 
@@ -17,6 +20,7 @@ import rx.schedulers.Schedulers;
 public class MyAcApplication extends Application {
 
     private static MyAcApplication application;
+    private static MainComponent component;
 
     public static MyAcApplication getInstance() {
         return application;
@@ -31,6 +35,9 @@ public class MyAcApplication extends Application {
 
         SqlBrite sqlBrite = new SqlBrite.Builder().build();
         briteProvider = sqlBrite.wrapContentProvider(getContentResolver(), Schedulers.io());
+
+
+        component = DaggerMainComponent.builder().mainModule(new MainModule()).build();
     }
 
     public static Context getAppContext() {
@@ -43,5 +50,9 @@ public class MyAcApplication extends Application {
 
     public static ProviderCompartment cupboard() {
         return CupboardFactory.cupboard().withContext(getAppContext());
+    }
+
+    public static MainComponent getComponent() {
+        return component;
     }
 }

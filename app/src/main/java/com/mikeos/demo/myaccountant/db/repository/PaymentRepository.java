@@ -1,5 +1,6 @@
 package com.mikeos.demo.myaccountant.db.repository;
 
+import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.api.ApiRequester;
 import com.mikeos.demo.myaccountant.model.Payment;
 
@@ -8,6 +9,11 @@ import com.mikeos.demo.myaccountant.model.Payment;
  */
 
 public class PaymentRepository extends RestRepository<Payment> {
+
+    public PaymentRepository() {
+        MyAcApplication.getComponent().inject(this);
+
+    }
 
     @Override
     public void restCreate(Payment item, ApiRequester requester) {

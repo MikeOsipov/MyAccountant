@@ -8,7 +8,7 @@ import rx.Observable;
  * Created on 27.03.17.
  */
 
-public interface Repo<T extends DbModel<T>> {
+public interface Repository<T extends DbModel<T>> {
 
     Observable<T> create(T item);
 

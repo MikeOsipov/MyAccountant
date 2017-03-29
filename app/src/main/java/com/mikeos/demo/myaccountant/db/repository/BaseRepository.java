@@ -14,12 +14,12 @@ import rx.functions.Action1;
  * Created on 28.03.17.
  */
 
-public class BaseRepository<T extends DbModel<T>> implements Repo<T> {
+public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
 
     @Override
     public Observable<T> create(T item) {
         return wrap(item, t -> {
-            Uri put = getProviderCompartment().put(t.getUri(), this);
+            Uri put = getProviderCompartment().put(t.getUri(), t);
             t.setId(Long.valueOf(put.getLastPathSegment()));
         });
     }
