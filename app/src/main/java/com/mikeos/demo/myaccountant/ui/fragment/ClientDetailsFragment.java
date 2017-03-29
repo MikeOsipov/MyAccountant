@@ -75,6 +75,8 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         adapter = new PaymentAdapter(getActivity(), null);
         binding.paymentList.setAdapter(adapter);
         binding.paymentList.setEmptyView(binding.emptyListMessage);
+        binding.paymentList.setOnItemClickListener(
+                (adapterView, view1, i, l) -> paymentListPresenter.selectedItem(view1, i, adapter.getCursor(), l));
 
         return view;
     }
@@ -176,7 +178,7 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
 
     @Override
     public void onItemSelected(View v, int position, Cursor cursor, long id) {
-
+        getFragmentContainer().addFragmentContent(PaymentEditFragment.getEditInstance(id, getClientId()));
     }
 
     @Override

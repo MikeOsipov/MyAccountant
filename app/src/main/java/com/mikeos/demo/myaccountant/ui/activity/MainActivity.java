@@ -1,7 +1,6 @@
 package com.mikeos.demo.myaccountant.ui.activity;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -28,20 +27,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-//        ArrayList<Client> a = new ArrayList<Client>(){
-//            {
-//                add(new Client("Name 1", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 500));
-//                add(new Client("Name 2", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 1000));
-//                add(new Client("Name 3", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 2000));
-//                add(new Client("Name 4", new ArrayList<String>(){{this.add("123");}}, "vat", "bank", "3345", 3000));
-//            }
-//        };
-//        MyAcApplication.cupboard().put(AppContentProvider.getUriHelper().getUri(Client.class), Client.class, a);
-
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding =
-                DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
@@ -56,18 +43,8 @@ public class MainActivity extends AppCompatActivity
         contentFrame = binding.fragmentContentFrame;
 
         if (savedInstanceState == null) {
-            setFragmentContent(new ClientListFragment());
+            addFragmentContent(ClientListFragment.getInstance());
         }
-    }
-
-    @Override
-    public FragmentManager getManager() {
-        return getFragmentManager();
-    }
-
-    @Override
-    public void setFragmentContent(Fragment fragment) {
-        setFragmentContent(fragment, null);
     }
 
     @Override
@@ -93,7 +70,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (getFragmentManager().getBackStackEntryCount() > 1){
+        } else if (getFragmentManager().getBackStackEntryCount() > 1) {
             super.onBackPressed();
         } else {
             finish();

@@ -1,11 +1,16 @@
 package com.mikeos.demo.myaccountant.mvp.presenter.base;
 
 import android.support.annotation.NonNull;
+
+import com.mikeos.demo.myaccountant.db.repository.Repository;
 import com.mikeos.demo.myaccountant.model.DbModel;
 import com.mikeos.demo.myaccountant.mvp.view.base.BaseEditView;
 
+import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public abstract class BaseEditPresenter<T extends DbModel<T>, V extends BaseEditView<T>> extends BaseDbModelPresenter<T, V> {
 
@@ -34,9 +39,27 @@ public abstract class BaseEditPresenter<T extends DbModel<T>, V extends BaseEdit
 
     private void saveInternal(T update, Action1<Object> onSuccess, Action1<Throwable> onError) {
         getViewState().onSavingBegins();
-        Subscription subscription = getSaveSubscription(update, onSuccess, onError);
+
+        transformBeforeSaving(update);
+
+        Repository<T> repository = getRepository();
+        Observable<T> observable = update.isValidId() ? repository.update(update) : repository.create(update);
+
+        Subscription subscription = observable
+                .compose(getObservableTransformer())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onSuccess, onError);
         registerSubscription(subscription);
     }
 
-    protected abstract Subscription getSaveSubscription(T update, Action1<Object> onSuccess, Action1<Throwable> onError);
+    protected abstract Repository<T> getRepository();
+
+    protected T transformBeforeSaving(T item) {
+        return item;
+    }
+
+    protected Observable.Transformer<T, T> getObservableTransformer(){
+        return tObservable -> tObservable;
+    }
 }

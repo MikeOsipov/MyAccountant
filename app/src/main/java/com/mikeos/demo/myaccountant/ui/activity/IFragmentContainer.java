@@ -9,12 +9,8 @@ import rx.functions.Action1;
 
 public interface IFragmentContainer {
 
-    void setFragmentContent(Fragment fragment);
-
     void addFragmentContent(Fragment fragment);
 
     void addFragmentContent(Fragment fragment, Action1<FragmentTransaction> transformer);
-
-    FragmentManager getManager();
 
 }

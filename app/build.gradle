@@ -64,4 +64,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // date dialog
     compile 'com.borax12.materialdaterangepicker:library:1.9'
+
+    //REST
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 }

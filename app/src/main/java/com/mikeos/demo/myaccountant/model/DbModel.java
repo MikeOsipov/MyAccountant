@@ -48,7 +48,7 @@ public abstract class DbModel<T extends DbModel> {
     }
 
     public void putIntoDB() {
-        if (_id != null && _id >= 0) {
+        if (isValidId()) {
             String where = BaseColumns._ID + "=?";
             String[] args = new String[]{_id + ""};
             getProviderCompartment().update(getUri(), buildContentValues(), where, args);
@@ -56,6 +56,10 @@ public abstract class DbModel<T extends DbModel> {
             Uri put = getProviderCompartment().put(getUri(), this);
             _id = Long.valueOf(put.getLastPathSegment());
         }
+    }
+
+    public boolean isValidId() {
+        return _id != null && _id >= 0;
     }
 
     /*
