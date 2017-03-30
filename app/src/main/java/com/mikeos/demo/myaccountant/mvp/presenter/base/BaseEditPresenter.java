@@ -45,21 +45,13 @@ public abstract class BaseEditPresenter<T extends DbModel<T>, V extends BaseEdit
         Repository<T> repository = getRepository();
         Observable<T> observable = update.isValidId() ? repository.update(update) : repository.create(update);
 
-        Subscription subscription = observable
-                .compose(getObservableTransformer())
+        registerSubscription(observable
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(onSuccess, onError);
-        registerSubscription(subscription);
+                .subscribe(onSuccess, onError));
     }
 
     protected abstract Repository<T> getRepository();
 
-    protected T transformBeforeSaving(T item) {
-        return item;
-    }
-
-    protected Observable.Transformer<T, T> getObservableTransformer(){
-        return tObservable -> tObservable;
+    protected void transformBeforeSaving(T item) {
     }
 }

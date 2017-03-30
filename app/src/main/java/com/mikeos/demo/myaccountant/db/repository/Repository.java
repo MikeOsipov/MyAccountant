@@ -10,6 +10,10 @@ import rx.Observable;
 
 public interface Repository<T extends DbModel<T>> {
 
+    Observable<T> query(long id, Class<T> tClass);
+
+    Observable<T> get(long id, Class<T> tClass);
+
     Observable<T> create(T item);
 
     Observable<T> update(T item);
