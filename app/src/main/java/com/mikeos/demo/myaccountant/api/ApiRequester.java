@@ -50,7 +50,7 @@ public class ApiRequester {
 
     private <T extends BaseServerResponse> T makeRequest(Call<T> call) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

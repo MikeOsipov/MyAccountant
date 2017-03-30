@@ -1,40 +1,30 @@
 package com.mikeos.demo.myaccountant.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.repository.ClientRepository;
 import com.mikeos.demo.myaccountant.db.repository.Repository;
 import com.mikeos.demo.myaccountant.model.client.Client;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientEditView;
 
-import rx.Single;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import javax.inject.Inject;
 
 @InjectViewState
 public class ClientEditPresenter extends BaseEditPresenter<Client, ClientEditView> {
 
+    @Inject
+    ClientRepository repository;
+
     public ClientEditPresenter(long id) {
         super(id);
+        MyAcApplication.getComponent().inject(this);
     }
 
     @Override
     protected Repository<Client> getRepository() {
-        return new ClientRepository();
+        return repository;
     }
-
-    //    @Override
-//    protected Subscription getSaveSubscription(Client update, Action1<Object> onSuccess, Action1<Throwable> onError) {
-//        return Single.create(subscriber -> {
-//            update.putIntoDB();
-//            subscriber.onSuccess(null);
-//        })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(onSuccess, onError);
-//    }
 
     @Override
     public Class<Client> getModelClass() {

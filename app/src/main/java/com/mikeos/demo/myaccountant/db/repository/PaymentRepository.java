@@ -5,6 +5,8 @@ import com.mikeos.demo.myaccountant.api.ApiRequester;
 import com.mikeos.demo.myaccountant.model.Payment;
 import com.mikeos.demo.myaccountant.model.client.Client;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.functions.Action3;
 
@@ -14,7 +16,8 @@ import rx.functions.Action3;
 
 public class PaymentRepository extends RestRepository<Payment> {
 
-    ClientRepository clientRepository = new ClientRepository();
+    @Inject
+    ClientRepository clientRepository;
 
     public PaymentRepository() {
         MyAcApplication.getComponent().inject(this);

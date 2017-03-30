@@ -7,7 +7,6 @@ import com.mikeos.demo.myaccountant.model.DbModel;
 import com.mikeos.demo.myaccountant.mvp.view.base.BaseEditView;
 
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -47,6 +46,7 @@ public abstract class BaseEditPresenter<T extends DbModel<T>, V extends BaseEdit
 
         registerSubscription(observable
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(onSuccess, onError));
     }
 
