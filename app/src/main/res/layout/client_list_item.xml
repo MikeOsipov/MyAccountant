@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="client" type="com.mikeos.demo.myaccountant.model.client.Client"/>
+        <variable name="client" type="com.mikeos.demo.myaccountant.model.Client"/>
     </data>
 
     <LinearLayout

@@ -3,8 +3,8 @@ package com.mikeos.demo.myaccountant.db.repository;
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.api.ApiRequester;
 import com.mikeos.demo.myaccountant.db.repository.base.RestRepository;
-import com.mikeos.demo.myaccountant.model.Payment;
 import com.mikeos.demo.myaccountant.model.Client;
+import com.mikeos.demo.myaccountant.model.Payment;
 
 import javax.inject.Inject;
 
@@ -16,9 +16,6 @@ import rx.functions.Action3;
  */
 
 public class PaymentRepository extends RestRepository<Payment> {
-
-    @Inject
-    ClientRepository clientRepository;
 
     public PaymentRepository() {
         MyAcApplication.getComponent().inject(this);
@@ -53,13 +50,16 @@ public class PaymentRepository extends RestRepository<Payment> {
                     subscriber.onNext(null);
                     subscriber.onCompleted();
                 });
+        ClientRepository clientRepository = RepositoryHolder.getInstance().getClientRepository();
         return Observable.combineLatest(
                 getOldObservable,
                 observable,
                 clientRepository.get(item.getUserId(), Client.class),
                 (paymentOld, paymentUpdated, client) -> {
-                    editor.call(paymentOld, paymentUpdated, client);
-                    clientRepository.update(client).subscribe();
+                    if (client != null) {
+                        editor.call(paymentOld, paymentUpdated, client);
+                        clientRepository.update(client).subscribe();
+                    }
                     return paymentUpdated;
                 });
     }

@@ -33,7 +33,7 @@ public class ApiRequester {
     }
 
     public BaseServerResponse deleteClient(Client client) {
-        return makeRequest(api.deleteClient(client));
+        return makeRequest(api.deleteClient(client.getId()));
     }
 
     public BaseServerResponse addPayment(Payment payment) {
@@ -45,7 +45,7 @@ public class ApiRequester {
     }
 
     public BaseServerResponse deletePayment(Payment payment) {
-        return makeRequest(api.deletePayment(payment));
+        return makeRequest(api.deletePayment(payment.getId()));
     }
 
     private <T extends BaseServerResponse> T makeRequest(Call<T> call) {

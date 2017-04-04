@@ -33,6 +33,10 @@ public abstract class BaseListFragment extends BaseFragment implements DBListVie
         binding.list.setAdapter(adapter);
         binding.list.setOnItemClickListener(
                 (adapterView, view1, i, l) -> getPresenter().selectedItem(view1, i, adapter.getCursor(), l));
+        binding.list.setOnItemLongClickListener((parent, view1, position, id) -> {
+            onLongClick(id);
+            return true;
+        });
         binding.fab.setOnClickListener(view1 -> getPresenter().onAddClicked());
 
         return view;
@@ -45,5 +49,8 @@ public abstract class BaseListFragment extends BaseFragment implements DBListVie
     @Override
     public void showData(Cursor data) {
         adapter.swapCursor(data);
+    }
+
+    public void onLongClick(long id){
     }
 }

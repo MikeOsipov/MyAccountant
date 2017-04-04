@@ -6,9 +6,12 @@ import android.net.Uri;
 
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.AppContentProvider;
+import com.mikeos.demo.myaccountant.db.specs.RepositorySpecification;
 import com.mikeos.demo.myaccountant.model.DbModel;
 
+import nl.qbusict.cupboard.CupboardFactory;
 import nl.qbusict.cupboard.ProviderCompartment;
+import nl.qbusict.cupboard.QueryResultIterable;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func0;
@@ -36,6 +39,18 @@ public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
     @Override
     public Observable<T> get(long id, Class<T> tClass) {
         return wrap(() -> getProviderCompartment().query(getUriForId(id, tClass), tClass).get(), null);
+    }
+
+    @Override
+    public Observable<QueryResultIterable<T>> getIterable(RepositorySpecification<T> specification, Class<T> tClass) {
+        return Observable.create(subscriber -> {
+            ProviderCompartment.QueryBuilder<T> builder = getProviderCompartment()
+                    .query(AppContentProvider.getUriHelper().getUri(tClass), tClass);
+            RepositorySpecification<T> s = specification != null ? specification : v -> v;
+            QueryResultIterable<T> query = s.transformQuery(builder).query();
+            subscriber.onNext(query);
+            subscriber.onCompleted();
+        });
     }
 
     @Override

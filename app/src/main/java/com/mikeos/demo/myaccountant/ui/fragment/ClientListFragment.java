@@ -9,14 +9,16 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mikeos.demo.myaccountant.databinding.ClientListItemBinding;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientListPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
+import com.mikeos.demo.myaccountant.mvp.view.ClientListView;
 import com.mikeos.demo.myaccountant.ui.adapter.ClientAdapter;
 import com.mikeos.demo.myaccountant.utils.ClientItemTransition;
+import com.mikeos.demo.myaccountant.utils.DialogsHelper;
 
 /**
  * Created on 15.02.17.
  */
 
-public class ClientListFragment extends BaseListFragment {
+public class ClientListFragment extends BaseListFragment implements ClientListView{
 
     public static ClientListFragment getInstance() {
         return new ClientListFragment();
@@ -52,5 +54,18 @@ public class ClientListFragment extends BaseListFragment {
 
         getFragmentContainer().addFragmentContent(fragment,
                 fragmentTransaction -> fragmentTransaction.addSharedElement(binding.root, "tr_test"));
+    }
+
+    @Override
+    public void onLongClick(long id) {
+        super.onLongClick(id);
+        DialogsHelper.getBuilder(getActivity()).setMessage("Remove item?")
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> presenter.remove(id))
+                .setNegativeButton(android.R.string.cancel, null).show();
+    }
+
+    @Override
+    public void deleteFailed(String msg) {
+        DialogsHelper.showErrorDialog(getActivity(), msg);
     }
 }
