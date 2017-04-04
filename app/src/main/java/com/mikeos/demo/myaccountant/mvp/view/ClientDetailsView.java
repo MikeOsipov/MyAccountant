@@ -6,7 +6,7 @@ import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 
 
 public interface ClientDetailsView extends MvpView {

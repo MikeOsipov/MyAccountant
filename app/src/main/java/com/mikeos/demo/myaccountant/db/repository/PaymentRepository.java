@@ -2,8 +2,9 @@ package com.mikeos.demo.myaccountant.db.repository;
 
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.api.ApiRequester;
+import com.mikeos.demo.myaccountant.db.repository.base.RestRepository;
 import com.mikeos.demo.myaccountant.model.Payment;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 
 import javax.inject.Inject;
 
@@ -25,14 +26,14 @@ public class PaymentRepository extends RestRepository<Payment> {
 
     @Override
     public Observable<Payment> create(Payment item) {
-        return updateClient(item, super.create(item), (paymentOld, paymentCreated, client) -> {
+        return withUpdateClient(item, super.create(item), (paymentOld, paymentCreated, client) -> {
             client.setTotalSum(client.getTotalSum() + paymentCreated.getSum());
         });
     }
 
     @Override
     public Observable<Payment> update(Payment item) {
-        return updateClient(item, super.create(item),
+        return withUpdateClient(item, super.create(item),
                 (paymentOld, paymentUpdated, client) -> {
                     client.setTotalSum(client.getTotalSum() - paymentOld.getSum() + paymentUpdated.getSum());
                 });
@@ -40,13 +41,13 @@ public class PaymentRepository extends RestRepository<Payment> {
 
     @Override
     public Observable<Payment> remove(Payment item) {
-        return updateClient(item, super.remove(item), (payment, paymentRemoved, client) -> {
+        return withUpdateClient(item, super.remove(item), (payment, paymentRemoved, client) -> {
             client.setTotalSum(client.getTotalSum() - paymentRemoved.getSum());
         });
     }
 
-    private Observable<Payment> updateClient(Payment item, Observable<Payment> observable,
-                                             Action3<Payment, Payment, Client> editor) {
+    private Observable<Payment> withUpdateClient(Payment item, Observable<Payment> observable,
+                                                 Action3<Payment, Payment, Client> editor) {
         Observable<Payment> getOldObservable =
                 item.isValidId() ? get(item.getId(), Payment.class) : Observable.create(subscriber -> {
                     subscriber.onNext(null);

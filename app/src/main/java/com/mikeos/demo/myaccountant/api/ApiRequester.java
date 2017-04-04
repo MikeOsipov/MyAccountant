@@ -3,7 +3,7 @@ package com.mikeos.demo.myaccountant.api;
 import android.text.TextUtils;
 
 import com.mikeos.demo.myaccountant.model.Payment;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 
 import java.io.IOException;
 
@@ -50,7 +50,7 @@ public class ApiRequester {
 
     private <T extends BaseServerResponse> T makeRequest(Call<T> call) {
         try {
-            Thread.sleep(500);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

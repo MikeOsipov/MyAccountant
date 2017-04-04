@@ -12,7 +12,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.ClientEditLayoutBinding;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientEditView;
 

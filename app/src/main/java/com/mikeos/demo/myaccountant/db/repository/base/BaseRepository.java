@@ -1,9 +1,8 @@
-package com.mikeos.demo.myaccountant.db.repository;
+package com.mikeos.demo.myaccountant.db.repository.base;
 
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.BaseColumns;
 
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.AppContentProvider;
@@ -49,11 +48,7 @@ public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
 
     @Override
     public Observable<T> update(T item) {
-        return wrap(() -> item, t -> {
-            String where = BaseColumns._ID + "=?";
-            String[] args = new String[]{t.getId() + ""};
-            getProviderCompartment().update(t.getUri(), t.buildContentValues(), where, args);
-        });
+        return wrap(() -> item, t -> getProviderCompartment().update(t.getUri(), t.buildContentValues()));
     }
 
     @Override
@@ -65,9 +60,9 @@ public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
         return ContentUris.withAppendedId(AppContentProvider.getUriHelper().getUri(tClass), id);
     }
 
-    protected Observable<T> wrap(Func0<T> item, Action1<T> action) {
+    private Observable<T> wrap(Func0<T> itemGetter, Action1<T> action) {
         return Observable.create(subscriber -> {
-            T model = item.call();
+            T model = itemGetter.call();
             if (action != null) {
                 action.call(model);
             }

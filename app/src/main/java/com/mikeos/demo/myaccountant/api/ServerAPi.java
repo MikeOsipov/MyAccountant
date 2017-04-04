@@ -1,7 +1,7 @@
 package com.mikeos.demo.myaccountant.api;
 
 import com.mikeos.demo.myaccountant.model.Payment;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -3,7 +3,7 @@ package com.mikeos.demo.myaccountant.db;
 import com.google.gson.Gson;
 import com.mikeos.demo.myaccountant.BuildConfig;
 import com.mikeos.demo.myaccountant.model.Payment;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 
 import java.util.Date;
 

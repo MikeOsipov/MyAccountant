@@ -10,7 +10,7 @@ import android.widget.CursorAdapter;
 
 import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.ClientListItemBinding;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 
 /**
  * Created on 15.02.17.

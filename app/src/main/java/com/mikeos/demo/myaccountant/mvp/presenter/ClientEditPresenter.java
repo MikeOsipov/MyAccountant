@@ -3,8 +3,8 @@ package com.mikeos.demo.myaccountant.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.repository.ClientRepository;
-import com.mikeos.demo.myaccountant.db.repository.Repository;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.db.repository.base.Repository;
+import com.mikeos.demo.myaccountant.model.Client;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientEditView;
 

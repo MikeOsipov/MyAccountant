@@ -1,7 +1,7 @@
 package com.mikeos.demo.myaccountant.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.model.Client;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbModelPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.ClientDetailsView;
 

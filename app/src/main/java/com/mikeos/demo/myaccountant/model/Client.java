@@ -1,8 +1,7 @@
-package com.mikeos.demo.myaccountant.model.client;
+package com.mikeos.demo.myaccountant.model;
 
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.R;
-import com.mikeos.demo.myaccountant.model.DbModel;
 import com.mikeos.demo.myaccountant.utils.CommonHelper;
 
 import java.util.List;

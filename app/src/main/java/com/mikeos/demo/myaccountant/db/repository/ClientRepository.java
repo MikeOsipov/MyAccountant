@@ -2,7 +2,8 @@ package com.mikeos.demo.myaccountant.db.repository;
 
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.api.ApiRequester;
-import com.mikeos.demo.myaccountant.model.client.Client;
+import com.mikeos.demo.myaccountant.db.repository.base.RestRepository;
+import com.mikeos.demo.myaccountant.model.Client;
 
 /**
  * Created on 28.03.17.

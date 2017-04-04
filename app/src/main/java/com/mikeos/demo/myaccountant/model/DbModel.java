@@ -47,17 +47,6 @@ public abstract class DbModel<T extends DbModel> {
         return cupboard().withEntity(getEntityClass()).toContentValues((T) this);
     }
 
-    public void putIntoDB() {
-        if (isValidId()) {
-            String where = BaseColumns._ID + "=?";
-            String[] args = new String[]{_id + ""};
-            getProviderCompartment().update(getUri(), buildContentValues(), where, args);
-        } else {
-            Uri put = getProviderCompartment().put(getUri(), this);
-            _id = Long.valueOf(put.getLastPathSegment());
-        }
-    }
-
     public boolean isValidId() {
         return _id != null && _id >= 0;
     }
@@ -65,11 +54,6 @@ public abstract class DbModel<T extends DbModel> {
     /*
     static section
      */
-
-    public static <T> T byId(Long id, Class<T> entityClass) {
-        return getProviderCompartment().query(AppContentProvider.getUriHelper().getUri(entityClass), entityClass)
-                .withSelection(BaseColumns._ID + "=?", String.valueOf(id)).get();
-    }
 
     public static <M extends DbModel> M fromCursor(Cursor c, Class<M> type) {
         if (c == null || c.getCount() == 0) {
@@ -81,9 +65,5 @@ public abstract class DbModel<T extends DbModel> {
         }
         Cursor wrap = new PreferredColumnOrderCursorWrapper(c, converter.getColumns());
         return converter.fromCursor(wrap);
-    }
-
-    private static ProviderCompartment getProviderCompartment() {
-        return MyAcApplication.cupboard();
     }
 }

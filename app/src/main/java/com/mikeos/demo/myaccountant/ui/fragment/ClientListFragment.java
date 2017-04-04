@@ -10,7 +10,7 @@ import com.mikeos.demo.myaccountant.databinding.ClientListItemBinding;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientListPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
 import com.mikeos.demo.myaccountant.ui.adapter.ClientAdapter;
-import com.mikeos.demo.myaccountant.utils.DetailsTransition;
+import com.mikeos.demo.myaccountant.utils.ClientItemTransition;
 
 /**
  * Created on 15.02.17.
@@ -45,10 +45,10 @@ public class ClientListFragment extends BaseListFragment {
         ClientListItemBinding binding = ((ClientListItemBinding) v.getTag());
 
         ClientDetailsFragment fragment = ClientDetailsFragment.getInstance(id);
-        fragment.setSharedElementEnterTransition(new DetailsTransition());
+        fragment.setSharedElementEnterTransition(new ClientItemTransition());
         fragment.setEnterTransition(new Fade());
         setExitTransition(new Fade());
-        fragment.setSharedElementReturnTransition(new DetailsTransition());
+        fragment.setSharedElementReturnTransition(new ClientItemTransition());
 
         getFragmentContainer().addFragmentContent(fragment,
                 fragmentTransaction -> fragmentTransaction.addSharedElement(binding.root, "tr_test"));

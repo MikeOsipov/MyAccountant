@@ -3,7 +3,7 @@ package com.mikeos.demo.myaccountant.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.repository.PaymentRepository;
-import com.mikeos.demo.myaccountant.db.repository.Repository;
+import com.mikeos.demo.myaccountant.db.repository.base.Repository;
 import com.mikeos.demo.myaccountant.model.Payment;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.PaymentEditView;

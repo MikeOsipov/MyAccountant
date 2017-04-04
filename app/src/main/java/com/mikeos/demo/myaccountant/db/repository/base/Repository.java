@@ -1,4 +1,4 @@
-package com.mikeos.demo.myaccountant.db.repository;
+package com.mikeos.demo.myaccountant.db.repository.base;
 
 import com.mikeos.demo.myaccountant.model.DbModel;
 
