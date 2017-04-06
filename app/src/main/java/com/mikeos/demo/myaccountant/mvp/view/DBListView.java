@@ -20,5 +20,8 @@ public interface DBListView extends MvpView {
     void moveToAdd();
 
     @StateStrategyType(SkipStrategy.class)
+    void deleteFailed(String msg);
+
+    @StateStrategyType(SkipStrategy.class)
     void onItemSelected(View v, int position, Cursor cursor, long id);
 }

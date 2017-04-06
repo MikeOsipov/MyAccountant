@@ -13,6 +13,7 @@ import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.BaseListFragmentLayoutBinding;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
 import com.mikeos.demo.myaccountant.mvp.view.DBListView;
+import com.mikeos.demo.myaccountant.utils.DialogsHelper;
 
 /**
  * Created on 15.02.17.
@@ -51,6 +52,16 @@ public abstract class BaseListFragment extends BaseFragment implements DBListVie
         adapter.swapCursor(data);
     }
 
-    public void onLongClick(long id){
+    public void onLongClick(long id) {
+        DialogsHelper.getBuilder(getActivity()).setMessage("Remove item?")
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> getPresenter().remove(id))
+                .setNegativeButton(android.R.string.cancel, null).show();
+
     }
+
+    @Override
+    public void deleteFailed(String msg) {
+        DialogsHelper.showErrorDialog(getActivity(), msg);
+    }
+
 }

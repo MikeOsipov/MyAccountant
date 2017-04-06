@@ -77,6 +77,10 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         binding.paymentList.setEmptyView(binding.emptyListMessage);
         binding.paymentList.setOnItemClickListener(
                 (adapterView, view1, i, l) -> paymentListPresenter.selectedItem(view1, i, adapter.getCursor(), l));
+        binding.paymentList.setOnItemLongClickListener((parent, view1, position, id) -> {
+            onLongClick(id);
+            return true;
+        });
 
         return view;
     }
@@ -100,6 +104,12 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
             return true;
         }
         return false;
+    }
+
+    public void onLongClick(long id) {
+        DialogsHelper.getBuilder(getActivity()).setMessage("Remove item?")
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> paymentListPresenter.remove(id))
+                .setNegativeButton(android.R.string.cancel, null).show();
     }
 
     // details
@@ -186,4 +196,10 @@ public class ClientDetailsFragment extends BaseFragment implements ClientDetails
         adapter.swapCursor(null);
         super.onDestroyView();
     }
+
+    @Override
+    public void deleteFailed(String msg) {
+        DialogsHelper.showErrorDialog(getActivity(), msg);
+    }
+
 }

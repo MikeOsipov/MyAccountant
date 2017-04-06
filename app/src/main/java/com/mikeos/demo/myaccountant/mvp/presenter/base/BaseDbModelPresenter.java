@@ -5,12 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.arellomobile.mvp.MvpView;
-import com.mikeos.demo.myaccountant.db.AppContentProvider;
 import com.mikeos.demo.myaccountant.model.DbModel;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
-public abstract class BaseDbModelPresenter<M extends DbModel<M>, V extends MvpView> extends BaseCursorPresenter<V> {
+public abstract class BaseDbModelPresenter<M extends DbModel<M>, V extends MvpView> extends CursorTypedPresenter<M, V> {
     private M model;
 
     public M getModel() {
@@ -19,13 +18,11 @@ public abstract class BaseDbModelPresenter<M extends DbModel<M>, V extends MvpVi
 
     protected abstract void onModelPrepared(M model);
 
-    public abstract Class<M> getModelClass();
-
     public BaseDbModelPresenter(long id) {
-        if(id < 0){
+        if (id < 0) {
             onModelPrepared(null);
         } else {
-            Uri uri = ContentUris.withAppendedId(AppContentProvider.getUriHelper().getUri(getModelClass()), id);
+            Uri uri = ContentUris.withAppendedId(getDataUri(), id);
             load(uri);
         }
     }

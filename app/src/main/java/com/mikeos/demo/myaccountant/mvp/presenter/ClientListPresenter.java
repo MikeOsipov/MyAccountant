@@ -1,14 +1,12 @@
 package com.mikeos.demo.myaccountant.mvp.presenter;
 
-import android.net.Uri;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.mikeos.demo.myaccountant.MyAcApplication;
-import com.mikeos.demo.myaccountant.db.AppContentProvider;
 import com.mikeos.demo.myaccountant.db.repository.ClientRepository;
+import com.mikeos.demo.myaccountant.db.repository.base.Repository;
 import com.mikeos.demo.myaccountant.model.Client;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
-import com.mikeos.demo.myaccountant.mvp.view.ClientListView;
+import com.mikeos.demo.myaccountant.mvp.view.DBListView;
 
 import javax.inject.Inject;
 
@@ -17,7 +15,7 @@ import javax.inject.Inject;
  */
 
 @InjectViewState
-public class ClientListPresenter extends BaseDbListPresenter<ClientListView> {
+public class ClientListPresenter extends BaseDbListPresenter<Client, DBListView> {
 
     @Inject
     ClientRepository repository;
@@ -27,15 +25,12 @@ public class ClientListPresenter extends BaseDbListPresenter<ClientListView> {
     }
 
     @Override
-    protected Uri getDataUri() {
-        return AppContentProvider.getUriHelper().getUri(Client.class);
+    protected Class<Client> getModelClass() {
+        return Client.class;
     }
 
-    public void remove(long id) {
-        repository.get(id, Client.class)
-                .switchMap(client -> repository.remove(client))
-                .subscribe(client -> {
-                }, throwable -> getViewState().deleteFailed(throwable.getMessage()));
+    @Override
+    protected Repository<Client> getRepository() {
+        return repository;
     }
-
 }

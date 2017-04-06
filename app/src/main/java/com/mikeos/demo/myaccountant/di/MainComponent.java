@@ -6,6 +6,7 @@ import com.mikeos.demo.myaccountant.db.repository.RepositoryHolder;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientListPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.PaymentEditPresenter;
+import com.mikeos.demo.myaccountant.mvp.presenter.PaymentListPresenter;
 
 import javax.inject.Singleton;
 
@@ -30,4 +31,6 @@ public interface MainComponent {
     void inject(PaymentEditPresenter presenter);
 
     void inject(ClientListPresenter presenter);
+
+    void inject(PaymentListPresenter presenter);
 }
