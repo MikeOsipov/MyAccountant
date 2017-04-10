@@ -3,6 +3,7 @@ package com.mikeos.demo.myaccountant.di;
 import com.mikeos.demo.myaccountant.db.repository.ClientRepository;
 import com.mikeos.demo.myaccountant.db.repository.PaymentRepository;
 import com.mikeos.demo.myaccountant.db.repository.RepositoryHolder;
+import com.mikeos.demo.myaccountant.mvp.presenter.ClientDetailsPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientEditPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientListPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.PaymentEditPresenter;
@@ -33,4 +34,6 @@ public interface MainComponent {
     void inject(ClientListPresenter presenter);
 
     void inject(PaymentListPresenter presenter);
+
+    void inject(ClientDetailsPresenter presenter);
 }

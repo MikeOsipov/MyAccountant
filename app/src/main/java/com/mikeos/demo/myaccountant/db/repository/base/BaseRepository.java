@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.AppContentProvider;
+import com.mikeos.demo.myaccountant.db.specs.BaseSpecification;
 import com.mikeos.demo.myaccountant.db.specs.RepositorySpecification;
 import com.mikeos.demo.myaccountant.model.DbModel;
 import com.squareup.sqlbrite.QueryObservable;
@@ -56,6 +57,9 @@ public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
 
     @Override
     public Observable<Cursor> queryCursor(Class<T> tClass, RepositorySpecification<T> specification) {
+        if(specification == null){
+            specification = new BaseSpecification<T>();
+        }
         QueryObservable queryObservable = specification
                 .applyParams(getUriByClass(tClass), MyAcApplication.getBriteProvider());
         return queryObservable.map(SqlBrite.Query::run);

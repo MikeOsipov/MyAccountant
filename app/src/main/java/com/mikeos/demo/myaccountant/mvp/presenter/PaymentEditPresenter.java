@@ -21,6 +21,7 @@ public class PaymentEditPresenter extends BaseEditPresenter<Payment, PaymentEdit
         super(id);
         this.userId = userId;
         MyAcApplication.getComponent().inject(this);
+        load();
     }
 
     @Override

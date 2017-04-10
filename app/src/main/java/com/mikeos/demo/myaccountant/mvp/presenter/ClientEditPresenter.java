@@ -19,6 +19,7 @@ public class ClientEditPresenter extends BaseEditPresenter<Client, ClientEditVie
     public ClientEditPresenter(long id) {
         super(id);
         MyAcApplication.getComponent().inject(this);
+        load();
     }
 
     @Override

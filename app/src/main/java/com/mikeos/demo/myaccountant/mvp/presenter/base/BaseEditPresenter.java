@@ -8,9 +8,7 @@ import com.mikeos.demo.myaccountant.mvp.view.base.BaseEditView;
 import com.mikeos.demo.myaccountant.utils.RxHelper;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public abstract class BaseEditPresenter<T extends DbModel<T>, V extends BaseEditView<T>> extends BaseDbModelPresenter<T, V> {
 
@@ -49,8 +47,6 @@ public abstract class BaseEditPresenter<T extends DbModel<T>, V extends BaseEdit
                 .compose(RxHelper.asyncTransformer())
                 .subscribe(onSuccess, onError));
     }
-
-    protected abstract Repository<T> getRepository();
 
     protected void transformBeforeSaving(T item) {
     }

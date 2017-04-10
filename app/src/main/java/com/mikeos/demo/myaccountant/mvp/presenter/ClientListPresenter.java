@@ -22,6 +22,7 @@ public class ClientListPresenter extends BaseDbListPresenter<Client, DBListView>
 
     public ClientListPresenter() {
         MyAcApplication.getComponent().inject(this);
+        load();
     }
 
     @Override

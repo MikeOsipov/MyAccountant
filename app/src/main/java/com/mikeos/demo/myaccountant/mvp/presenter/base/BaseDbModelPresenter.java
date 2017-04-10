@@ -1,15 +1,14 @@
 package com.mikeos.demo.myaccountant.mvp.presenter.base;
 
-import android.content.ContentUris;
-import android.database.Cursor;
-import android.net.Uri;
-
 import com.arellomobile.mvp.MvpView;
 import com.mikeos.demo.myaccountant.model.DbModel;
 
-import static nl.qbusict.cupboard.CupboardFactory.cupboard;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 public abstract class BaseDbModelPresenter<M extends DbModel<M>, V extends MvpView> extends CursorTypedPresenter<M, V> {
+
+    private long id;
     private M model;
 
     public M getModel() {
@@ -19,17 +18,23 @@ public abstract class BaseDbModelPresenter<M extends DbModel<M>, V extends MvpVi
     protected abstract void onModelPrepared(M model);
 
     public BaseDbModelPresenter(long id) {
+        this.id = id;
+    }
+
+    protected void load() {
         if (id < 0) {
-            onModelPrepared(null);
+            setModel(null);
         } else {
-            Uri uri = ContentUris.withAppendedId(getDataUri(), id);
-            load(uri);
+            Subscription subscription = getRepository()
+                    .query(id, getModelClass())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::setModel);
+            registerSubscription(subscription);
         }
     }
 
-    @Override
-    protected void onLoaded(Cursor cursor) {
-        model = cupboard().withCursor(cursor).get(getModelClass());
+    private void setModel(M model) {
+        this.model = model;
         onModelPrepared(model);
     }
 }
