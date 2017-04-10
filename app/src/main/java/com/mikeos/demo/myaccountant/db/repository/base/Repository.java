@@ -18,7 +18,7 @@ public interface Repository<T extends DbModel<T>> {
 
     Observable<T> get(long id, Class<T> tClass);
 
-    //    Observable<Cursor> queryCursor();
+    Observable<Cursor> queryCursor(Class<T> tClass, RepositorySpecification<T> specification);
 //
     Observable<QueryResultIterable<T>> getIterable(RepositorySpecification<T> specification, Class<T> tClass);
 

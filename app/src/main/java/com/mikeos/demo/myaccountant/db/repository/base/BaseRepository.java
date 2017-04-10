@@ -8,8 +8,9 @@ import com.mikeos.demo.myaccountant.MyAcApplication;
 import com.mikeos.demo.myaccountant.db.AppContentProvider;
 import com.mikeos.demo.myaccountant.db.specs.RepositorySpecification;
 import com.mikeos.demo.myaccountant.model.DbModel;
+import com.squareup.sqlbrite.QueryObservable;
+import com.squareup.sqlbrite.SqlBrite;
 
-import nl.qbusict.cupboard.CupboardFactory;
 import nl.qbusict.cupboard.ProviderCompartment;
 import nl.qbusict.cupboard.QueryResultIterable;
 import rx.Observable;
@@ -45,12 +46,19 @@ public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
     public Observable<QueryResultIterable<T>> getIterable(RepositorySpecification<T> specification, Class<T> tClass) {
         return Observable.create(subscriber -> {
             ProviderCompartment.QueryBuilder<T> builder = getProviderCompartment()
-                    .query(AppContentProvider.getUriHelper().getUri(tClass), tClass);
-            RepositorySpecification<T> s = specification != null ? specification : v -> v;
-            QueryResultIterable<T> query = s.transformQuery(builder).query();
+                    .query(getUriByClass(tClass), tClass);
+            QueryResultIterable<T> query = (specification != null
+                                ? specification.transformQuery(builder) : builder).query();
             subscriber.onNext(query);
             subscriber.onCompleted();
         });
+    }
+
+    @Override
+    public Observable<Cursor> queryCursor(Class<T> tClass, RepositorySpecification<T> specification) {
+        QueryObservable queryObservable = specification
+                .applyParams(getUriByClass(tClass), MyAcApplication.getBriteProvider());
+        return queryObservable.map(SqlBrite.Query::run);
     }
 
     @Override
@@ -72,7 +80,11 @@ public class BaseRepository<T extends DbModel<T>> implements Repository<T> {
     }
 
     private Uri getUriForId(long id, Class<T> tClass) {
-        return ContentUris.withAppendedId(AppContentProvider.getUriHelper().getUri(tClass), id);
+        return ContentUris.withAppendedId(getUriByClass(tClass), id);
+    }
+
+    private Uri getUriByClass(Class<T> tClass) {
+        return AppContentProvider.getUriHelper().getUri(tClass);
     }
 
     private Observable<T> wrap(Func0<T> itemGetter, Action1<T> action) {
