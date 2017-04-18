@@ -4,12 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -20,31 +16,23 @@ import com.mikeos.demo.myaccountant.ui.fragment.ClientListFragment;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, IFragmentContainer {
+        implements IFragmentContainer {
 
-    private DrawerLayout drawerLayout;
-    private FrameLayout contentFrame;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-
-
-        drawerLayout = binding.drawerLayout;
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        binding.navigationView.setNavigationItemSelectedListener(this);
-        contentFrame = binding.fragmentContentFrame;
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         if (savedInstanceState == null) {
             addFragmentContent(ClientListFragment.getInstance());
         }
+
+        getFragmentManager().addOnBackStackChangedListener(() -> {
+            int count = getFragmentManager().getBackStackEntryCount();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(count > 1);
+        });
     }
 
     @Override
@@ -62,41 +50,28 @@ public class MainActivity extends AppCompatActivity
         if (transformer != null) {
             transformer.call(transaction);
         }
-        transaction.replace(contentFrame.getId(), fragment).addToBackStack(null);
+        transaction.replace(binding.fragmentContentFrame.getId(), fragment).addToBackStack(null);
         transaction.commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (getFragmentManager().getBackStackEntryCount() > 1) {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
             super.onBackPressed();
         } else {
             finish();
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return super.onOptionsItemSelected(item);
     }
+
 }
