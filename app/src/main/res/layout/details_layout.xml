@@ -2,86 +2,98 @@
 
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:colorBackground"
-                    android:clickable="true">
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="?android:colorBackground"
+                 android:clickable="true">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/client_list_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical">
 
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/header"
-            android:layout_margin="3dp"
-            android:background="#cccccc"/>
+            <TextView
+                android:id="@+id/title"
+                style="@style/ScreenTitleL1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/client_details_title"/>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/separator">
+            <include
+                android:id="@+id/header"
+                layout="@layout/client_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-            <FrameLayout android:id="@+id/list_frame"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <ListView
-                    android:id="@+id/payment_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                <FrameLayout android:id="@+id/list_frame"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/empty_list_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/empty_payments_list"
-                    android:textSize="22sp"
-                    android:visibility="gone"
-                    android:textStyle="bold"/>
-            </FrameLayout>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:orientation="vertical">
 
-            <LinearLayout android:id="@+id/info_frame"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-                          android:background="?android:colorBackground"
-                          android:orientation="vertical"
-                          android:padding="10dp"
-                          android:visibility="gone">
+                        <TextView style="@style/ScreenTitleL2"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:text="@string/payments_list_title"/>
+                        <ListView
+                            android:id="@+id/payment_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
 
-                <TextView
-                    android:id="@+id/info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/client_phones_title"
-                    android:textSize="20sp"/>
+                    <TextView
+                        android:id="@+id/empty_list_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/empty_payments_list"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
+                </FrameLayout>
 
-                <LinearLayout android:id="@+id/phone_list_frame"
+                <LinearLayout android:id="@+id/info_frame"
                               android:layout_width="match_parent"
                               android:layout_height="match_parent"
-                              android:layout_marginTop="5dp"
-                              android:orientation="vertical"/>
-            </LinearLayout>
-        </FrameLayout>
+                              android:background="?android:colorBackground"
+                              android:orientation="vertical"
+                              android:padding="10dp"
+                              android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/client_phones_title"
+                        android:textSize="20sp"/>
+
+                    <LinearLayout android:id="@+id/phone_list_frame"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:layout_marginTop="5dp"
+                                  android:orientation="vertical"/>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/fab_margin"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_add_white_36dp"/>
@@ -90,11 +102,10 @@
             android:id="@+id/edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|right"
             android:layout_margin="@dimen/fab_margin"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_edit_white_36dp"/>
 
-    </RelativeLayout>
+    </FrameLayout>
 </layout>

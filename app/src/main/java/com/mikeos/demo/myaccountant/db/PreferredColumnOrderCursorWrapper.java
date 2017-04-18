@@ -9,6 +9,9 @@ import java.util.List;
 import nl.qbusict.cupboard.convert.EntityConverter;
 
 /**
+ From Mike Osipov: Copied from cupboard sources for using in {@link com.mikeos.demo.myaccountant.model.DbModel#fromCursor(Cursor, Class)}
+
+
  * A cursor that guarantees that it will return columns of the wrapped cursor in the requested order and with the requested casing.
  * This cursor is passed to {@link EntityConverter#fromCursor(Cursor)} so that the converter does not have to do any look up from column to translation:
  * it can just assume that the column at a certain index is the same as returned from {@link EntityConverter#getColumns()} at the same index.

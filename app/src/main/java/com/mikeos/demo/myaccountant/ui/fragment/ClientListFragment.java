@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CursorAdapter;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.mikeos.demo.myaccountant.R;
 import com.mikeos.demo.myaccountant.databinding.ClientListItemBinding;
 import com.mikeos.demo.myaccountant.mvp.presenter.ClientListPresenter;
 import com.mikeos.demo.myaccountant.mvp.presenter.base.BaseDbListPresenter;
@@ -31,6 +32,11 @@ public class ClientListFragment extends BaseListFragment implements DBListView {
     @Override
     protected BaseDbListPresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    protected CustomViewData customView() {
+        return new CustomViewData(R.layout.client_list_fragment, R.id.content);
     }
 
     @Override

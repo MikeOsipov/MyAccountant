@@ -3,6 +3,8 @@ package com.mikeos.demo.myaccountant.ui.fragment;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +42,23 @@ public abstract class BaseListFragment extends BaseFragment implements DBListVie
         });
         binding.fab.setOnClickListener(view1 -> getPresenter().onAddClicked());
 
-        return view;
+        View root;
+        CustomViewData customViewData = customView();
+        if (customViewData != null) {
+            root = inflater.inflate(customViewData.layout, null);
+            ViewGroup forList = (ViewGroup) root.findViewById(customViewData.containerId);
+            forList.addView(view);
+        } else {
+            root = view;
+        }
+        return root;
+    }
+
+    /**
+     * Provide the custom layout id and id of {@link ViewGroup} which should contains base list layout
+     */
+    protected CustomViewData customView() {
+        return null;
     }
 
     protected abstract BaseDbListPresenter getPresenter();
@@ -64,4 +82,19 @@ public abstract class BaseListFragment extends BaseFragment implements DBListVie
         DialogsHelper.showErrorDialog(getActivity(), msg);
     }
 
+    /*
+    static
+     */
+
+    public static class CustomViewData {
+        @LayoutRes
+        int layout;
+        @IdRes
+        int containerId;
+
+        public CustomViewData(@LayoutRes int layout, @IdRes int containerId) {
+            this.layout = layout;
+            this.containerId = containerId;
+        }
+    }
 }

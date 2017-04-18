@@ -56,6 +56,7 @@ public class ApiRequester {
         }
 
         if (true) {
+            // Stub response because fake API
             return ((T) new BaseServerResponse());
         }
         Response<T> response;

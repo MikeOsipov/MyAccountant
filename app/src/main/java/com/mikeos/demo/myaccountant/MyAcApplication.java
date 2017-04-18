@@ -36,7 +36,6 @@ public class MyAcApplication extends Application {
         SqlBrite sqlBrite = new SqlBrite.Builder().build();
         briteProvider = sqlBrite.wrapContentProvider(getContentResolver(), Schedulers.io());
 
-
         component = DaggerMainComponent.builder().mainModule(new MainModule()).build();
     }
 
